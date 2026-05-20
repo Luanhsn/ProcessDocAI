@@ -27,7 +27,7 @@ def generate():
        1. Ziel des Prozesses
        2. Schritte (nummeriert)
        3. Verantwortliche pro Schritt
-       4. Checkliste am Ende
+       4. 4. Checkliste am Ende (als normale nummerierte Liste, keine Checkboxen, keine Klammern)
        """
 
     response = client.models.generate_content(
