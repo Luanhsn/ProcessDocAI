@@ -1,16 +1,12 @@
 from flask import Flask, render_template, request
-import google.generativeai as genai
+from google import genai
 from dotenv import load_dotenv
 import os
 
 app = Flask(__name__)
 
 load_dotenv()
-api_key = os.getenv("GEMINI_API_KEY")
-genai.configure(api_key=api_key)
-
-model = genai.GenerativeModel("gemini-1.5-flash")
-
+client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
 
 @app.route("/")
 def index():
@@ -32,6 +28,10 @@ def generate():
        """
 
     response = model.generate_content(prompt)
+    response = client.models.generate_content(
+        model="gemini-3.1-flash-lite",
+        contents=prompt
+    )
 
     return render_template("index.html", result=response.text)
 
