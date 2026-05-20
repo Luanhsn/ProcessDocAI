@@ -3,6 +3,8 @@ from io import BytesIO
 from flask import Flask, render_template, request, send_file
 from google import genai
 from dotenv import load_dotenv
+from reportlab.lib.pagesizes import A4
+from reportlab.pdfgen import canvas
 import os
 import markdown
 
@@ -43,6 +45,35 @@ def generate():
 
 
     return render_template("index.html", result=response.text)
+@app.route("/file_download", methods=["POST"])
+def file_download():
+    content = request.form.get("content")
+    content = content.replace('\r\n', '\n').replace('\r', '\n')
+
+    buffer = BytesIO()
+    p = canvas.Canvas(buffer, pagesize=A4)
+
+
+    width, height = A4
+    y = height - 50
+
+    for line in content.split("\n"):
+        if y < 50:
+            p.showPage()
+            y = height - 50
+        p.drawString(50, y, line)
+        y -= 20
+
+    p.save()
+    buffer.seek(0)
+
+    return send_file(
+        buffer,
+        mimetype="application/pdf",
+        as_attachment=True,
+        download_name="dokumentation.pdf"
+    )
+
 
 
 if __name__ == "__main__":
