@@ -44,12 +44,9 @@ def generate():
     return render_template("index.html", result=result_html, result_text = result_text)
 
 
-    return render_template("index.html", result=response.text)
 @app.route("/file_download", methods=["POST"])
 def file_download():
     content = request.form.get("content")
-    content = content.replace('\r\n', '\n').replace('\r', '\n')
-
     buffer = BytesIO()
     p = canvas.Canvas(buffer, pagesize=A4)
 
