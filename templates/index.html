@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>ProcessDoc AI</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+            color: #333;
+        }
+
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+
+        input[type="text"] {
+            width: 60%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #3498db;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>ProcessDoc AI</h1>
+    <p>Gib einen Prozess ein und erhalte eine strukturierte Dokumentation</p>
+
+    <form action="/generate" method="POST">
+        <input
+            type="text"
+            name="prozess_name"
+            placeholder="z.B. Neuer Mitarbeiter Onboarding">
+        <button type="submit">Dokumentation erstellen</button>
+    </form>
+
+    <form action="/file_download" method="POST">
+        <input type="hidden"
+               name="content"
+               value="{{ result_text }}">
+        <button type="submit">Download</button>
+    </form>
+
+    {% if result %}
+        <h2>Deine Dokumentation:</h2>
+        <p>{{ result | safe }}</p>
+    {% endif %}
+
+</body>
+</html>
