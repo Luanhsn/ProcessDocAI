@@ -53,6 +53,10 @@ def file_download():
     buffer = BytesIO()
     p = canvas.Canvas(buffer, pagesize=A4)
 
+    content = content.replace('\r\n', '\n').replace('\r', '\n')
+    content = re.sub(r'#{1,6}\s*', '', content)
+    content = re.sub(r'\*\*(.*?)\*\*', r'\1', content)
+    content = re.sub(r'\*', '', content)
 
     width, height = A4
     y = height - 50
