@@ -1,4 +1,6 @@
-from flask import Flask, render_template, request
+import re
+from io import BytesIO
+from flask import Flask, render_template, request, send_file
 from google import genai
 from dotenv import load_dotenv
 import os
@@ -27,11 +29,17 @@ def generate():
        4. Checkliste am Ende
        """
 
-    response = model.generate_content(prompt)
     response = client.models.generate_content(
         model="gemini-3.1-flash-lite",
         contents=prompt
     )
+
+    result_text = response.text
+
+    result_html = markdown.markdown(response.text, extensions=["tables"])
+
+    return render_template("index.html", result=result_html, result_text = result_text)
+
 
     return render_template("index.html", result=response.text)
 
