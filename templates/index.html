@@ -74,17 +74,18 @@
             placeholder="z.B. Neuer Mitarbeiter Onboarding">
         <button type="submit">Dokumentation erstellen</button>
     </form>
-
-    <form action="/file_download" method="POST">
-        <input type="hidden"
-               name="content"
-               value="{{ result_text }}">
-        <button type="submit">Download</button>
-    </form>
+    
 
     {% if result %}
         <h2>Deine Dokumentation:</h2>
         <p>{{ result | safe }}</p>
+
+        <form action="/file_download" method="POST">
+            <input type="hidden"
+                   name="content"
+                   value="{{ result_text }}">
+            <button type="submit">Download</button>
+        </form>
     {% endif %}
 
 </body>
