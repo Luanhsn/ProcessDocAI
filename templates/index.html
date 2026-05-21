@@ -78,7 +78,7 @@
     <div id="spinner" style="display:none; margin-top:20px; color:#3498db;">
         Dokumentation wird generiert...
     </div>
-    
+
     {% if result %}
         <h2>Deine Dokumentation:</h2>
         <p>{{ result | safe }}</p>
@@ -90,6 +90,11 @@
             <button type="submit">Download</button>
         </form>
     {% endif %}
+
+    {% if error %}
+        <p style="color: red;">{{ error }}</p>
+    {% endif %}
+
 
     <script>
         document.getElementById("generate-form").addEventListener("submit", function() {

@@ -20,10 +20,13 @@ def index():
 @app.route("/generate", methods=["POST"])
 def generate():
 
-    prozess = request.form.get("prozess_name")
+    process = request.form.get("prozess_name")
+
+    if not process:
+        return render_template("index.html", error="Es muss etwas eingegeben werden")
 
     prompt = f"""
-       Erstelle eine strukturierte Prozessdokumentation für: {prozess}
+       Erstelle eine strukturierte Prozessdokumentation für: {process}
 
        Bitte gliedere sie so:
        1. Ziel des Prozesses
@@ -41,7 +44,7 @@ def generate():
 
     result_html = markdown.markdown(response.text, extensions=["tables"])
 
-    return render_template("index.html", result=result_html, result_text = result_text)
+    return render_template("index.html", result=result_html, result_text=result_text)
 
 
 @app.route("/file_download", methods=["POST"])
