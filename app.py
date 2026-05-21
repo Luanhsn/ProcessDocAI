@@ -5,6 +5,7 @@ from google import genai
 from dotenv import load_dotenv
 from reportlab.lib.pagesizes import A4
 from reportlab.pdfgen import canvas
+from docx import Document
 import os
 import markdown
 
