@@ -83,7 +83,7 @@
         <h2>Deine Dokumentation:</h2>
         <p>{{ result | safe }}</p>
 
-        <form action="/file_download" method="POST">
+        <form action="/pdf_download" method="POST">
             <input type="hidden"
                    name="content"
                    value="{{ result_text }}">
