@@ -47,7 +47,7 @@ def generate():
     return render_template("index.html", result=result_html, result_text=result_text)
 
 
-@app.route("/file_download", methods=["POST"])
+@app.route("/pdf_download", methods=["POST"])
 def file_download():
     content = request.form.get("content")
     buffer = BytesIO()
