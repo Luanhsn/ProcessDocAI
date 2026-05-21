@@ -79,6 +79,12 @@ def file_download():
         download_name="dokumentation.pdf"
     )
 
+@app.route("/docx_download", methods=["POST"])
+def docx_download():
+    content = request.form.get("content")
+    doc = Document()
+
+    content = content.replace('\r\n', '\n').replace('\r', '\n')
 
     for line in content.split("\n"):
         line = line.strip()
