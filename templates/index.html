@@ -89,6 +89,13 @@
                    value="{{ result_text }}">
             <button type="submit">Download in pdf</button>
         </form>
+
+        <form action="/docx_download" method="POST">
+            <input type="hidden"
+                   name="content"
+                   value="{{ result_text }}">
+            <button type="submit">Download in docx</button>
+        </form>
     {% endif %}
 
     {% if error %}
