@@ -8,12 +8,24 @@ from reportlab.pdfgen import canvas
 from docx import Document
 import os
 import markdown
+import sqlite3
 
 app = Flask(__name__)
 
 load_dotenv()
 client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
 
+def init_db():
+    conn = sqlite3.connect("dokumentationen.db")
+    cursor = conn.cursor()
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS dokumentationen (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            inhalt TEXT NOT NULL
+        )
+    """)
+    conn.commit()
+    conn.close()
 @app.route("/")
 def index():
     return render_template("index.html")
