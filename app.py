@@ -55,6 +55,12 @@ def generate():
 
     result_text = response.text
 
+    conn = sqlite3.connect("dokumentationen.db")
+    cursor = conn.cursor()
+    cursor.execute("INSERT INTO dokumentationen (inhalt) VALUES (?)", (result_text,))
+    conn.commit()
+    conn.close()
+
     result_html = markdown.markdown(response.text, extensions=["tables"])
 
     return render_template("index.html", result=result_html, result_text=result_text)
