@@ -79,6 +79,31 @@ def file_download():
     )
 
 
+    for line in content.split("\n"):
+        line = line.strip()
+        if not line:
+            continue
+        if line.startswith("# "):
+            doc.add_heading(line[2:], level=1)
+        elif line.startswith("## "):
+            doc.add_heading(line[3:], level=2)
+        elif line.startswith("### "):
+            doc.add_heading(line[4:], level=3)
+        else:
+            line = re.sub(r'\*\*(.*?)\*\*', r'\1', line)
+            line = re.sub(r'\*', '', line)
+            doc.add_paragraph(line)
+
+    buffer = BytesIO()
+    doc.save(buffer)
+    buffer.seek(0)
+
+    return send_file(
+        buffer,
+        mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        as_attachment=True,
+        download_name="dokumentation.docx"
+    )
 
 if __name__ == "__main__":
     app.run(debug=True)
