@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Verlauf</title>
+</head>
+<body>
+    <h1>Verlauf</h1>
+    {% for entry in entries %}
+        <p>{{ entry[1] }}</p>
+    {% endfor %}
+
+</body>
+</html>
