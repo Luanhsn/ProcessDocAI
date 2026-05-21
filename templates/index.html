@@ -83,19 +83,17 @@
         <h2>Deine Dokumentation:</h2>
         <p>{{ result | safe }}</p>
 
-        <form action="/pdf_download" method="POST">
-            <input type="hidden"
-                   name="content"
-                   value="{{ result_text }}">
-            <button type="submit">Download in pdf</button>
-        </form>
+        <div style="display:flex; gap:10px; margin-top:20px;">
+            <form action="/pdf_download" method="POST">
+                <input type="hidden" name="content" value="{{ result_text }}">
+                <button type="submit">Download als PDF</button>
+            </form>
 
-        <form action="/docx_download" method="POST">
-            <input type="hidden"
-                   name="content"
-                   value="{{ result_text }}">
-            <button type="submit">Download in docx</button>
-        </form>
+            <form action="/docx_download" method="POST">
+                <input type="hidden" name="content" value="{{ result_text }}">
+                <button type="submit">Download als DOCX</button>
+            </form>
+        </div>
     {% endif %}
 
     {% if error %}
