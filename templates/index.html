@@ -67,15 +67,18 @@
     <h1>ProcessDoc AI</h1>
     <p>Gib einen Prozess ein und erhalte eine strukturierte Dokumentation</p>
 
-    <form action="/generate" method="POST">
+    <form id="generate-form" action="/generate" method="POST">
         <input
             type="text"
             name="prozess_name"
             placeholder="z.B. Neuer Mitarbeiter Onboarding">
         <button type="submit">Dokumentation erstellen</button>
     </form>
-    
 
+    <div id="spinner" style="display:none; margin-top:20px; color:#3498db;">
+        Dokumentation wird generiert...
+    </div>
+    
     {% if result %}
         <h2>Deine Dokumentation:</h2>
         <p>{{ result | safe }}</p>
@@ -87,6 +90,12 @@
             <button type="submit">Download</button>
         </form>
     {% endif %}
+
+    <script>
+        document.getElementById("generate-form").addEventListener("submit", function() {
+            document.getElementById("spinner").style.display = "block";
+        });
+    </script>
 
 </body>
 </html>
