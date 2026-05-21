@@ -130,6 +130,15 @@ def docx_download():
         download_name="dokumentation.docx"
     )
 
+@app.route("/history")
+def verlauf():
+    conn = sqlite3.connect("dokumentationen.db")
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM dokumentationen")
+    entries = cursor.fetchall()
+    conn.close()
+    return render_template("history.html", entries=entries)
+
 if __name__ == "__main__":
     init_db()
     app.run(debug=True)
