@@ -2,24 +2,21 @@
 
 AI-powered tool for automatic process documentation – enter a process, get structured documentation.
 
-## What it does
-
-The user enters a process in plain language – e.g. "New Employee Onboarding". The app sends it to the Gemini API and returns structured documentation including:
-
-- Goal of the process
-- Numbered steps
-- Responsible parties per step
-- Checklist
+## Features
+- Generate structured process documentation via Gemini AI
+- Download documentation as PDF or DOCX
+- Save and view documentation history
+- Error handling for empty inputs
 
 The documentation can be downloaded directly as a PDF.
 
 ## Tech Stack
 
-- Python
-- Flask
-- Google Gemini API
-- ReportLab (PDF generation)
-- python-markdown
+- **Backend:** Python, Flask
+- **AI:** Google Gemini API
+- **Database:** SQLite
+- **Export:** ReportLab (PDF), python-docx (DOCX)
+- **Frontend:** HTML, CSS, JavaScript
 
 ## Installation
 
@@ -52,16 +49,17 @@ Get a free API key at: [aistudio.google.com](https://aistudio.google.com)
 
 ```
 ProcessDocAI/
-├── app.py              # Flask backend + Gemini integration
-├── .env                # API key (not included in repository)
+├── app.py # Flask backend + Gemini integration
+├── dokumentationen.db # SQLite database
+├── .env # API key
 ├── .gitignore
 └── templates/
-    └── index.html      # Frontend
+├── index.html # Main page
+└── history.html # Documentation history
 ```
 
-## Example Inputs
-
-- "New Employee Onboarding"
-- "Invoice approval process"
-- "Software deployment to all devices"
-- "IT incident reporting and resolution"
+## Usage
+1. Enter a process name in the input field
+2. Click "Dokumentation erstellen"
+3. Download the result as PDF or DOCX
+4. View previous documentation under "Verlauf""
