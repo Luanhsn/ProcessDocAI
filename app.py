@@ -26,6 +26,7 @@ def init_db():
     """)
     conn.commit()
     conn.close()
+
 def clean_for_html(content):
     return markdown.markdown(content, extensions=["tables"])
 @app.route("/")
