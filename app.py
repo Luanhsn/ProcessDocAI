@@ -29,6 +29,12 @@ def init_db():
 
 def clean_for_html(content):
     return markdown.markdown(content, extensions=["tables"])
+
+def get_db():
+    conn = sqlite3.connect("dokumentationen.db")
+    cursor = conn.cursor()
+    return conn, cursor
+
 @app.route("/")
 def index():
     return render_template("index.html")
@@ -58,8 +64,7 @@ def generate():
 
     result_text = response.text
 
-    conn = sqlite3.connect("dokumentationen.db")
-    cursor = conn.cursor()
+    conn, cursor = get_db()
     cursor.execute("INSERT INTO dokumentationen (inhalt) VALUES (?)", (result_text,))
     conn.commit()
     conn.close()
@@ -135,8 +140,7 @@ def docx_download():
 
 @app.route("/history")
 def verlauf():
-    conn = sqlite3.connect("dokumentationen.db")
-    cursor = conn.cursor()
+    conn, cursor = get_db()
     cursor.execute("SELECT * FROM dokumentationen")
     entries = cursor.fetchall()
     conn.close()
