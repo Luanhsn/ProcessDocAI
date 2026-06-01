@@ -9,6 +9,7 @@ from docx import Document
 import os
 import markdown
 import sqlite3
+import textwrap
 
 app = Flask(__name__)
 
@@ -91,8 +92,12 @@ def file_download():
         if y < 50:
             p.showPage()
             y = height - 50
-        p.drawString(50, y, line)
-        y -= 20
+        for row in textwrap.wrap(line, width=90):
+            if y < 50:
+                p.showPage()
+                y = height - 50
+            p.drawString(50, y, row)
+            y -= 20
 
     p.save()
     buffer.seek(0)
