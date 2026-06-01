@@ -8,6 +8,11 @@ AI-powered tool for automatic process documentation – enter a process, get str
 - Save and view documentation history
 - Error handling for empty inputs
 
+## Screenshots
+
+![Index](screenshots/index.png)
+![Generate](screenshots/generate.png)
+
 
 ## Tech Stack
 
