@@ -148,6 +148,7 @@ def verlauf():
     cursor.execute("SELECT * FROM dokumentationen")
     entries = cursor.fetchall()
     conn.close()
+    entries = [(e[0], clean_for_html(e[1])) for e in entries]
     return render_template("history.html", entries=entries)
 
 if __name__ == "__main__":
