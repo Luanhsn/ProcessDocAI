@@ -69,8 +69,7 @@ def generate():
     conn.commit()
     conn.close()
 
-    result_html = markdown.markdown(response.text, extensions=["tables"])
-
+    result_html = clean_for_html(response.text)
     return render_template("index.html", result=result_html, result_text=result_text)
 
 
