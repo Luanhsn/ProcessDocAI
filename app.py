@@ -9,6 +9,7 @@ from docx import Document
 import os
 import markdown
 import sqlite3
+import textwrap
 
 app = Flask(__name__)
 
@@ -29,6 +30,12 @@ def init_db():
 
 def clean_for_html(content):
     return markdown.markdown(content, extensions=["tables"])
+
+def get_db():
+    conn = sqlite3.connect("dokumentationen.db")
+    cursor = conn.cursor()
+    return conn, cursor
+
 @app.route("/")
 def index():
     return render_template("index.html")
@@ -58,14 +65,12 @@ def generate():
 
     result_text = response.text
 
-    conn = sqlite3.connect("dokumentationen.db")
-    cursor = conn.cursor()
+    conn, cursor = get_db()
     cursor.execute("INSERT INTO dokumentationen (inhalt) VALUES (?)", (result_text,))
     conn.commit()
     conn.close()
 
-    result_html = markdown.markdown(response.text, extensions=["tables"])
-
+    result_html = clean_for_html(response.text)
     return render_template("index.html", result=result_html, result_text=result_text)
 
 
@@ -87,8 +92,12 @@ def file_download():
         if y < 50:
             p.showPage()
             y = height - 50
-        p.drawString(50, y, line)
-        y -= 20
+        for row in textwrap.wrap(line, width=90):
+            if y < 50:
+                p.showPage()
+                y = height - 50
+            p.drawString(50, y, row)
+            y -= 20
 
     p.save()
     buffer.seek(0)
@@ -135,8 +144,7 @@ def docx_download():
 
 @app.route("/history")
 def verlauf():
-    conn = sqlite3.connect("dokumentationen.db")
-    cursor = conn.cursor()
+    conn, cursor = get_db()
     cursor.execute("SELECT * FROM dokumentationen")
     entries = cursor.fetchall()
     conn.close()
