@@ -6,7 +6,10 @@
 </head>
 <body>
     <h1>Verlauf</h1>
+
+    <!-- Loop through all saved documentations from the database -->
     {% for entry in entries %}
+        <!-- | safe allows rendered HTML from Markdown conversion in app.py -->
         <p>{{ entry[1] | safe }}</p>
     {% endfor %}
 
