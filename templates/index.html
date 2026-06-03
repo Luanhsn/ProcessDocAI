@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>ProcessDoc AI</title>
     <style>
+        /* Base layout */
         body {
             font-family: Arial, sans-serif;
             max-width: 900px;
@@ -18,6 +19,7 @@
             padding-bottom: 10px;
         }
 
+        /* Process input field */
         input[type="text"] {
             width: 60%;
             padding: 10px;
@@ -26,6 +28,7 @@
             border-radius: 5px;
         }
 
+        /* Shared button style */
         button {
             padding: 10px 20px;
             background-color: #3498db;
@@ -40,6 +43,7 @@
             background-color: #2980b9;
         }
 
+        /* Table styling for generated documentation */
         table {
             width: 100%;
             border-collapse: collapse;
@@ -57,6 +61,7 @@
             color: white;
         }
 
+        /* Alternating row color for readability */
         tr:nth-child(even) {
             background-color: #f2f2f2;
         }
@@ -67,6 +72,7 @@
     <h1>ProcessDoc AI</h1>
     <p>Gib einen Prozess ein und erhalte eine strukturierte Dokumentation</p>
 
+    <!-- Form to submit the process name to the /generate route -->
     <form id="generate-form" action="/generate" method="POST">
         <input
             type="text"
@@ -75,15 +81,20 @@
         <button type="submit">Dokumentation erstellen</button>
     </form>
 
+    <!-- Loading indicator shown while the AI is generating -->
     <div id="spinner" style="display:none; margin-top:20px; color:#3498db;">
         Dokumentation wird generiert...
     </div>
 
+    <!-- Result section — only shown after a successful generation -->
     {% if result %}
         <h2>Deine Dokumentation:</h2>
+        <!-- | safe allows rendered HTML from Markdown conversion -->
         <p>{{ result | safe }}</p>
 
+        <!-- Download and navigation buttons -->
         <div style="display:flex; gap:10px; margin-top:20px;">
+            <!-- Hidden field passes the raw Markdown text to the download routes -->
             <form action="/pdf_download" method="POST">
                 <input type="hidden" name="content" value="{{ result_text }}">
                 <button type="submit">Download als PDF</button>
@@ -100,12 +111,13 @@
         </div>
     {% endif %}
 
+    <!-- Error message shown if no input was provided -->
     {% if error %}
         <p style="color: red;">{{ error }}</p>
     {% endif %}
 
-
     <script>
+        // Show loading spinner when the generate form is submitted
         document.getElementById("generate-form").addEventListener("submit", function() {
             document.getElementById("spinner").style.display = "block";
         });
